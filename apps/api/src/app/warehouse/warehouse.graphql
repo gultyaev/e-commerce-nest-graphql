@@ -1,0 +1,19 @@
+input WarehouseInput {
+  title: String!
+}
+
+type Warehouse {
+  id: Int!
+  title: String!
+  products: [Product]
+}
+
+type Query {
+  warehouses: [Warehouse]
+  warehouse(id: Int!): Warehouse
+}
+
+type Mutation {
+  addWarehouse(warehouse: WarehouseInput!): Warehouse
+  updateWarehouse(id: Int!, warehouse: WarehouseInput!): Warehouse
+}

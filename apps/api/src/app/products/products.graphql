@@ -1,0 +1,24 @@
+input ProductInput {
+  title: String!
+  quantity: Int!
+  warehouseId: Int!
+}
+
+type Product {
+  id: Int!
+  title: String!
+  quantity: Int!
+  createdAt: String!
+  warehouseId: Int!
+  warehouse: Warehouse!
+}
+
+type Query {
+  product(id: Int!): Product
+  products: [Product]
+}
+
+type Mutation {
+  createProduct(product: ProductInput!): Product
+  updateProduct(id: Int!, product: ProductInput!): Product
+}
