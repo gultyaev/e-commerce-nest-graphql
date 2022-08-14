@@ -1,0 +1,26 @@
+input UserInput {
+  "Min length: 3"
+  email: String!
+  "Min length: 6"
+  password: String!
+}
+
+type JWT {
+  accessToken: String!
+}
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+}
+
+type NewUser {
+  id: Int!
+  email: String!
+}
+
+type Mutation {
+  createUser(user: UserInput!): NewUser!
+  authenticateUser(user: UserInput!): JWT!
+}

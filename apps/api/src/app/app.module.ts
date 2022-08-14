@@ -7,6 +7,9 @@ import { WarehouseModule } from './warehouse/warehouse.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import * as path from 'path';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { EnvironmentModule } from './environment/environment.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -18,11 +21,15 @@ import * as path from 'path';
         path: path.join(process.cwd(), 'apps/api/src/graphql.ts'),
         outputAs: 'class',
       },
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
       cors: true,
     }),
     PrismaModule,
     ProductsModule,
     WarehouseModule,
+    EnvironmentModule,
+    UsersModule,
   ],
   providers: [AppService],
 })

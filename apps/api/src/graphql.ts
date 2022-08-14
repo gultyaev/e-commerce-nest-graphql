@@ -14,6 +14,11 @@ export class ProductInput {
     warehouseId: number;
 }
 
+export class UserInput {
+    email: string;
+    password: string;
+}
+
 export class WarehouseInput {
     title: string;
 }
@@ -43,9 +48,28 @@ export abstract class IMutation {
 
     abstract updateProduct(id: number, product: ProductInput): Nullable<Product> | Promise<Nullable<Product>>;
 
+    abstract createUser(user: UserInput): NewUser | Promise<NewUser>;
+
+    abstract authenticateUser(user: UserInput): JWT | Promise<JWT>;
+
     abstract addWarehouse(warehouse: WarehouseInput): Nullable<Warehouse> | Promise<Nullable<Warehouse>>;
 
     abstract updateWarehouse(id: number, warehouse: WarehouseInput): Nullable<Warehouse> | Promise<Nullable<Warehouse>>;
+}
+
+export class JWT {
+    accessToken: string;
+}
+
+export class User {
+    id: number;
+    email: string;
+    password: string;
+}
+
+export class NewUser {
+    id: number;
+    email: string;
 }
 
 export class Warehouse {
