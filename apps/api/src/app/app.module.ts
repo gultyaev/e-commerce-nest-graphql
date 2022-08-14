@@ -13,6 +13,7 @@ import * as path from 'path';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
+      csrfPrevention: true,
       definitions: {
         path: path.join(process.cwd(), 'apps/api/src/graphql.ts'),
         outputAs: 'class',
