@@ -23,6 +23,7 @@ export class Product {
     title: string;
     quantity: number;
     createdAt: string;
+    img: string;
     warehouseId: number;
     warehouse: Warehouse;
 }

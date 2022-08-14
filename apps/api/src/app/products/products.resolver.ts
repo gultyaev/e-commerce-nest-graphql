@@ -44,7 +44,7 @@ export class ProductsResolver {
     @Args('id') id: number,
     @Args('product') product: CreateProductDto
   ) {
-    const { quantity, title, warehouseId } = product;
+    const { quantity, title, warehouseId, img } = product;
 
     return this.productsService.updateProduct({
       where: {
@@ -53,6 +53,7 @@ export class ProductsResolver {
       data: {
         quantity,
         title,
+        img,
         warehouse: {
           connect: {
             id: warehouseId,
@@ -64,11 +65,12 @@ export class ProductsResolver {
 
   @Mutation()
   async createProduct(@Args('product') product: CreateProductDto) {
-    const { quantity, title, warehouseId } = product;
+    const { quantity, title, warehouseId, img } = product;
 
     return this.productsService.createProduct({
       quantity,
       title,
+      img,
       warehouse: {
         connect: {
           id: warehouseId,

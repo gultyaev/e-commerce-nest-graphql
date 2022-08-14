@@ -13,4 +13,8 @@ export class CreateProductDto extends ProductInput {
   @IsNumber()
   @Min(0)
   warehouseId: number;
+
+  @IsString()
+  @MinLength(3)
+  img: string;
 }

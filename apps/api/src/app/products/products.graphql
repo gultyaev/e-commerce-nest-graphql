@@ -9,6 +9,7 @@ type Product {
   title: String!
   quantity: Int!
   createdAt: String!
+  img: String!
   warehouseId: Int!
   warehouse: Warehouse!
 }
