@@ -1,3 +1,4 @@
+import { Logger, UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -6,11 +7,11 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { WarehouseService } from './warehouse.service';
 import { Warehouse } from '@prisma/client';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { ProductsService } from '../products/products.service';
 import { CreateWarehouseDto } from './warehouse.dto';
-import { Logger } from '@nestjs/common';
+import { WarehouseService } from './warehouse.service';
 
 @Resolver('Warehouse')
 export class WarehouseResolver {
@@ -42,6 +43,7 @@ export class WarehouseResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation()
   async addWarehouse(@Args('warehouse') warehouse: CreateWarehouseDto) {
     const { title } = warehouse;
@@ -53,6 +55,7 @@ export class WarehouseResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation()
   async updateWarehouse(
     @Args('id') id: number,

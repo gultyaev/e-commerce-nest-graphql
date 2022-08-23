@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -6,10 +7,11 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { ProductsService } from './products.service';
-import { WarehouseService } from '../warehouse/warehouse.service';
 import { Product } from '@prisma/client';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { WarehouseService } from '../warehouse/warehouse.service';
 import { CreateProductDto } from './products.dto';
+import { ProductsService } from './products.service';
 
 @Resolver('Product')
 export class ProductsResolver {
@@ -39,6 +41,7 @@ export class ProductsResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation()
   async updateProduct(
     @Args('id') id: number,
@@ -63,6 +66,7 @@ export class ProductsResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation()
   async createProduct(@Args('product') product: CreateProductDto) {
     const { quantity, title, warehouseId, img } = product;
