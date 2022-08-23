@@ -10,6 +10,7 @@ import * as path from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { EnvironmentModule } from './environment/environment.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UsersModule } from './users/users.module';
     WarehouseModule,
     EnvironmentModule,
     UsersModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

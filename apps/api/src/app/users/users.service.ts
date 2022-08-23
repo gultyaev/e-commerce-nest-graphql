@@ -1,10 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { EnvironmentService } from '../environment/environment.service';
-import { PrismaService } from '../prisma/prisma.service';
-import { JWT, NewUser } from '../../graphql';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import * as crypto from 'crypto';
-import { UserDto } from './users.dto';
+import { NewUser, User } from '../../graphql';
+import { EnvironmentService } from '../environment/environment.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +12,7 @@ export class UsersService {
     private prisma: PrismaService
   ) {}
 
-  async createUser(data: Prisma.UserCreateInput): Promise<NewUser> {
+  createUser(data: Prisma.UserCreateInput): Promise<NewUser> {
     const { email, password } = data;
 
     return this.prisma.user.create({
@@ -28,25 +27,22 @@ export class UsersService {
     });
   }
 
-  async authenticateUser(data: UserDto): Promise<JWT> {
-    const { email, password } = data;
-
+  async validateUser(
+    email: string,
+    password: string
+  ): Promise<Omit<User, 'password'> | null> {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
         password: this.getPasswordHash(password),
       },
+      select: {
+        id: true,
+        email: true,
+      },
     });
 
-    if (!user) {
-      throw new NotFoundException('No such user');
-    }
-
-    return {
-      // TODO replace with JWT creation logic
-      // TODO require authentication for data mutations
-      accessToken: 'token',
-    };
+    return user;
   }
 
   private getPasswordHash(password: string): string {
