@@ -38,6 +38,7 @@ model Order {
   shippingAddress String
   fullName        String
   paymentMethod   String
+  status          String
   products        OrdersOnProducts[]
 }
 
