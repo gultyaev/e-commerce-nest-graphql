@@ -39,6 +39,7 @@ model Order {
   fullName        String
   paymentMethod   String
   status          String
+  createdAt       DateTime           @default(now())
   products        OrdersOnProducts[]
 }
 
@@ -48,8 +49,7 @@ model OrdersOnProducts {
   product   Product @relation(fields: [productId], references: [id])
   productId Int
 
-  count     Int
-  createdAt DateTime @default(now())
+  count Int
 
   @@id([orderId, productId])
 }
