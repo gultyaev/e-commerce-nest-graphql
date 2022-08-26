@@ -17,17 +17,38 @@ model Warehouse {
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
+  id          Int                @id @default(autoincrement())
   title       String
   img         String
   quantity    Int
-  createdAt   DateTime  @default(now())
-  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  createdAt   DateTime           @default(now())
+  warehouse   Warehouse          @relation(fields: [warehouseId], references: [id])
   warehouseId Int
+  orders      OrdersOnProducts[]
 }
 
 model User {
   id       Int    @id @default(autoincrement())
   email    String
   password String
+}
+
+model Order {
+  id              Int                @id @default(autoincrement())
+  shippingAddress String
+  fullName        String
+  paymentMethod   String
+  products        OrdersOnProducts[]
+}
+
+model OrdersOnProducts {
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  count     Int
+  createdAt DateTime @default(now())
+
+  @@id([orderId, productId])
 }
