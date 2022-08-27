@@ -8,9 +8,29 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum OrderStatus {
+    NEW = "NEW",
+    PROCESSING = "PROCESSING",
+    DONE = "DONE",
+    CANCELLED = "CANCELLED"
+}
+
+export class OrderedProductsInput {
+    productId: number;
+    count: number;
+}
+
+export class OrderInput {
+    shippingAddress: string;
+    fullName: string;
+    paymentMethod: string;
+    orderedProducts: OrderedProductsInput[];
+}
+
 export class ProductInput {
     title: string;
     quantity: number;
+    img: string;
     warehouseId: number;
 }
 
@@ -23,17 +43,26 @@ export class WarehouseInput {
     title: string;
 }
 
-export class Product {
+export class Order {
     id: number;
-    title: string;
-    quantity: number;
+    shippingAddress: string;
+    fullName: string;
+    paymentMethod: string;
+    status: OrderStatus;
     createdAt: string;
-    img: string;
-    warehouseId: number;
-    warehouse: Warehouse;
+    products: OrderProduct[];
+}
+
+export class OrderProduct {
+    product: Product;
+    count: number;
 }
 
 export abstract class IQuery {
+    abstract order(id: number): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract orders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
+
     abstract product(id: number): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract products(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
@@ -44,6 +73,10 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
+    abstract createOrder(order: OrderInput): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract updateOrder(id: number, newStatus: OrderStatus): Nullable<Order> | Promise<Nullable<Order>>;
+
     abstract createProduct(product: ProductInput): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract updateProduct(id: number, product: ProductInput): Nullable<Product> | Promise<Nullable<Product>>;
@@ -55,6 +88,16 @@ export abstract class IMutation {
     abstract addWarehouse(warehouse: WarehouseInput): Nullable<Warehouse> | Promise<Nullable<Warehouse>>;
 
     abstract updateWarehouse(id: number, warehouse: WarehouseInput): Nullable<Warehouse> | Promise<Nullable<Warehouse>>;
+}
+
+export class Product {
+    id: number;
+    title: string;
+    quantity: number;
+    createdAt: string;
+    img: string;
+    warehouseId: number;
+    warehouse: Warehouse;
 }
 
 export class JWT {

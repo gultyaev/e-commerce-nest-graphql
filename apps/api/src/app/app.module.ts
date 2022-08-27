@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { AppService } from './app.service';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import * as path from 'path';
+import { AuthModule } from './auth/auth.module';
+import { EnvironmentModule } from './environment/environment.module';
+import { OrdersModule } from './orders/orders.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProductsModule } from './products/products.module';
-import { WarehouseModule } from './warehouse/warehouse.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import * as path from 'path';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { EnvironmentModule } from './environment/environment.module';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { AuthModule } from './auth/auth.module';
     EnvironmentModule,
     UsersModule,
     AuthModule,
+    OrdersModule,
   ],
-  providers: [AppService],
 })
 export class AppModule {}

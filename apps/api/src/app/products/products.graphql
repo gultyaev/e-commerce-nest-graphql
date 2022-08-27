@@ -1,6 +1,7 @@
 input ProductInput {
   title: String!
   quantity: Int!
+  img: String!
   warehouseId: Int!
 }
 

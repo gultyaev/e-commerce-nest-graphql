@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Product, Prisma } from '@prisma/client';
+import { Prisma, Product } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -13,7 +13,9 @@ export class ProductsService {
   async getProducts(params: {
     where?: Prisma.ProductWhereInput;
   }): Promise<Product[]> {
-    return this.prisma.product.findMany(params);
+    return this.prisma.product.findMany({
+      where: params.where,
+    });
   }
 
   async createProduct(data: Prisma.ProductCreateInput): Promise<Product> {

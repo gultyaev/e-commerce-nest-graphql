@@ -1,0 +1,43 @@
+enum OrderStatus {
+  NEW
+  PROCESSING
+  DONE
+  CANCELLED
+}
+
+input OrderedProductsInput {
+  productId: Int!
+  count: Int!
+}
+
+input OrderInput {
+  shippingAddress: String!
+  fullName: String!
+  paymentMethod: String!
+  orderedProducts: [OrderedProductsInput!]!
+}
+
+type Order {
+  id: Int!
+  shippingAddress: String!
+  fullName: String!
+  paymentMethod: String!
+  status: OrderStatus!
+  createdAt: String!
+  products: [OrderProduct!]!
+}
+
+type OrderProduct {
+  product: Product!
+  count: Int!
+}
+
+type Query {
+  order(id: Int!): Order
+  orders: [Order]
+}
+
+type Mutation {
+  createOrder(order: OrderInput!): Order
+  updateOrder(id: Int!, newStatus: OrderStatus!): Order
+}
