@@ -23,9 +23,7 @@ export class OrdersService {
     });
   }
 
-  getOrders(params: {
-    where?: Prisma.OrderWhereUniqueInput;
-  }): Promise<Order[]> {
+  getOrders(params: { where?: Prisma.OrderWhereInput }): Promise<Order[]> {
     return this.prisma.order.findMany({
       where: params.where,
       include: includeClause,

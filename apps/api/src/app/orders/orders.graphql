@@ -34,7 +34,7 @@ type OrderProduct {
 
 type Query {
   order(id: Int!): Order
-  orders: [Order]
+  orders(status: [OrderStatus]): [Order]
 }
 
 type Mutation {

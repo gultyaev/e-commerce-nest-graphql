@@ -61,7 +61,7 @@ export class OrderProduct {
 export abstract class IQuery {
     abstract order(id: number): Nullable<Order> | Promise<Nullable<Order>>;
 
-    abstract orders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
+    abstract orders(status?: Nullable<Nullable<OrderStatus>[]>): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
 
     abstract product(id: number): Nullable<Product> | Promise<Nullable<Product>>;
 

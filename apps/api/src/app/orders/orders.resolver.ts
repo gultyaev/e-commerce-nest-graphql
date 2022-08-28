@@ -19,8 +19,18 @@ export class OrdersResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query()
-  orders() {
-    return this.ordersService.getOrders({});
+  orders(@Args('status') status: OrderStatus[]) {
+    return this.ordersService.getOrders(
+      status
+        ? {
+            where: {
+              status: {
+                in: status,
+              },
+            },
+          }
+        : {}
+    );
   }
 
   @Mutation()
