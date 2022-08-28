@@ -1,4 +1,4 @@
-import { Logger, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -47,8 +47,6 @@ export class WarehouseResolver {
   @Mutation()
   async addWarehouse(@Args('warehouse') warehouse: CreateWarehouseDto) {
     const { title } = warehouse;
-
-    Logger.log(warehouse);
 
     return this.warehouseService.createWarehouse({
       title,
